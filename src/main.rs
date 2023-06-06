@@ -25,11 +25,7 @@ async fn latest(config: Data<Configuration>) -> Result<impl Responder, Box<dyn s
     .header("User-Agent", "tauri-updater-server")
     .bearer_auth(&config.token)
     .build()?;
-// 
-    let response = client.execute(request).await?.json::<Release>().await?;
-
-    println!("{:#?}", &response);
-    
+    let response = client.execute(request).await?.json::<Release>().await?;    
     let version = Version {
         version: response.tag_name,
         pub_date: response.published_at,
